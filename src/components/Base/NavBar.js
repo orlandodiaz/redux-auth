@@ -37,9 +37,13 @@ class NavBar extends Component {
           </Link>
         )}
 
-        <Link style={{ marginRight: 20 }} to={"/profile"}>
-          Profile
-        </Link>
+        {isLoggedIn ? (
+          <Link style={{ marginRight: 20 }} to={"/profile"}>
+            Profile
+          </Link>
+        ) : (
+          ""
+        )}
 
         {isLoggedIn ? (
           <button onClick={this.handleClick} type="submit">
