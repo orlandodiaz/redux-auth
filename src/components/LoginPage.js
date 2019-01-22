@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import * as actionCreators from "../actions/index.js";
 import { connect } from "react-redux";
 import * as actions from "../actions";
-import Redirect from "react-router-dom/es/Redirect";
-// import LoginForm from "./LoginForm";
+import { Redirect } from "react-router-dom";
+import LoginForm from "./LoginForm";
 import { withRouter } from "react-router-dom";
 
 // Fake sample data goes here
@@ -11,7 +11,8 @@ import { withRouter } from "react-router-dom";
 class LoginComponent extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    redirectToReferrer: false
   };
 
   componentDidMount() {
@@ -19,48 +20,67 @@ class LoginComponent extends Component {
   }
   // const isLoggedIn = this.props.currentstate.auth.is_authenticated;
 
-  handleSubmit = e => {
+  // handleSubmit = e => {
+  //   // alert(this.state.username);
+  //   // this.props.users
+  //
+  //   // alert("It works");
+  //   e.preventDefault();
+  //
+  //   // console.log(values.username);
+  //   this.props.login(this.state.username, this.state.password);
+  // };
+
+  handleSubmit = values => {
     // alert(this.state.username);
     // this.props.users
 
     // alert("It works");
-    e.preventDefault();
+    // e.preventDefault();
 
     // console.log(values.username);
-    this.props.login(this.state.username, this.state.password);
+    this.props.login(values.username, values.password).then(() => {
+      this.setState({
+        redirectToReferrer: true
+      });
+    });
   };
 
   render() {
     const isLoggedIn = this.props.state.auth.is_authenticated;
 
+    // const { from } = this.props.location.state || { from: { pathname: "/" } };
     if (isLoggedIn) {
       // return <Redirect to="/profile" />;
       // return this.props.history.push("/profile");
-      return <Redirect to="/profile" />;
+
+      const { from } = this.props.location.state || { from: { pathname: "/" } };
+
+      return <Redirect to={from} />;
     } else {
       return (
         <div>
           <h1> Login </h1>
-          {/*<LoginForm onSubmit={this.handleSubmit} />*/}
-          <form onSubmit={this.handleSubmit}>
-            <label> Login </label>
-            <input
-              type="text"
-              id="username"
-              onChange={e => this.setState({ username: e.target.value })}
-            />
+          <LoginForm onSubmit={this.handleSubmit} />
+          {/*<form onSubmit={this.handleSubmit}>*/}
+          {/*<label> Login </label>*/}
+          {/*<input*/}
+          {/*type="text"*/}
+          {/*id="username"*/}
+          {/*onChange={e => this.setState({ username: e.target.value })}*/}
+          {/*/>*/}
 
-            <label> Password </label>
-            <input
-              type="text"
-              id="password"
-              onChange={e => this.setState({ password: e.target.value })}
-            />
+          {/*<label> Password </label>*/}
+          {/*<input*/}
+          {/*type="text"*/}
+          {/*id="password"*/}
+          {/*onChange={e => this.setState({ password: e.target.value })}*/}
+          {/*/>*/}
 
-            <button onSubmit={this.handleSubmit} type="submit">
-              Login
-            </button>
-          </form>
+          {/*<button onSubmit={this.handleSubmit} type="submit">*/}
+          {/*Login*/}
+          {/*</button>*/}
+          {/*</form>*/}
         </div>
       );
     }
