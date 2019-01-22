@@ -2,7 +2,7 @@ import { Link, withRouter } from "react-router-dom";
 
 import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
-import * as actionCreators from "../../actions";
+import * as actionCreators from "../../../actions";
 
 class NavBar extends Component {
   handleClick = () => {

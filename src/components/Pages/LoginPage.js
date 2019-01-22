@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import * as actionCreators from "../actions/index.js";
+import * as actionCreators from "../../actions/index.js";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 import { Redirect } from "react-router-dom";
-import LoginForm from "./LoginForm";
+import LoginForm from "../Forms/LoginForm";
 import { withRouter } from "react-router-dom";
+import { flashMessage } from "../../actions";
 
 // Fake sample data goes here
 
@@ -40,9 +41,7 @@ class LoginComponent extends Component {
 
     // console.log(values.username);
     this.props.login(values.username, values.password).then(() => {
-      this.setState({
-        redirectToReferrer: true
-      });
+      this.props.flash("Logged in succesfully", "success");
     });
   };
 
@@ -93,8 +92,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (username, password) => dispatch(actions.login(username, password))
-    // flash: message => dispatch(actions.flashMessage(message))
+    login: (username, password) => dispatch(actions.login(username, password)),
+    flash: (message, type) => dispatch(actions.flashMessage(message, type))
   };
 };
 

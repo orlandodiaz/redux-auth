@@ -1,3 +1,5 @@
+import { flashMessage } from "../actions";
+
 const initState = {
   token: "",
   is_authenticated: false,
@@ -9,6 +11,7 @@ const authReducer = (state = initState, action) => {
     case "LOGIN_SUCCESS":
       console.log("action.payload.data.token");
       console.log(action.payload.data.token);
+      flashMessage("ss");
       if (action.payload.data.token) {
         return {
           token: action.payload.data.token,

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import * as actions from "../../actions";
 import { withRouter } from "react-router-dom";
-import ProfileForm from "./ProfileForm";
+import ProfileForm from "../Forms/ProfileForm";
+import { flashMessage } from "../../actions";
 
 class ProfilePage extends Component {
   state = {
@@ -34,7 +35,14 @@ class ProfilePage extends Component {
     // UpdateUser action
   }
   handleSubmit = values => {
-    this.props.updateUser(values);
+    this.props
+      .updateUser(values)
+      .then(response => {
+        this.props.flash("Settings updated successfully", "success");
+      })
+      .catch(error => {
+        this.props.flash("Settings update error", "error");
+      });
   };
 
   // handleSubmit = e => {
@@ -85,7 +93,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    // flash: message => dispatch(actions.flashMessage(message)),
+    flash: (message, type) => dispatch(actions.flashMessage(message, type)),
     currentUserDetail: () => dispatch(actions.currentUserDetail()),
     updateUser: user_data => dispatch(actions.updateUser(user_data))
   };

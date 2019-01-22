@@ -11,12 +11,12 @@ import {
 } from "react-router-dom";
 
 import HelloComponent from "./components/HelloComponent";
-import LoginPage from "./components/LoginPage";
-import BasePage from "./components/Base/BasePage";
-import HomePage from "./components/HomePage";
-import AboutPage from "./components/AboutPage";
-import RegisterPage from "./components/RegisterPage";
-import ProfilePage from "./components/ProfilePage";
+import LoginPage from "./components/Pages/LoginPage";
+import BasePage from "./components/Pages/Base/BasePage";
+import HomePage from "./components/Pages/HomePage";
+import AboutPage from "./components/Pages/AboutPage";
+import RegisterPage from "./components/Pages/RegisterPage";
+import ProfilePage from "./components/Pages/ProfilePage";
 
 import * as actions from "./actions";
 
@@ -66,11 +66,7 @@ class App extends Component {
         {...rest}
         render={props => {
           if (!this.props.state.auth.is_authenticated) {
-            return (
-              <Redirect
-                to={{ pathname: "/login", state: { from: props.location } }}
-              />
-            );
+            return <Redirect to={{ pathname: "/login", state: { from: props.location } }} />;
           } else {
             return <ChildComponent {...props} />;
           }

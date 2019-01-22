@@ -1,6 +1,7 @@
 import { Field, reduxForm } from "redux-form";
 import React, { Component } from "react";
 
+/////////////////////////////////////////// VALIDATIONS///////////////////////////////////
 const validate = values => {
   const errors = {};
   if (!values.username) {
@@ -31,6 +32,7 @@ const warn = values => {
   return warnings;
 };
 
+/////////////////////////////// FIELD RENDERING TEMPLATE////////////////////////////////////
 const renderField = ({
   input,
   label,
@@ -48,6 +50,7 @@ const renderField = ({
   </div>
 );
 
+////////////////////////// FORM HTML ////////////////////////////////
 let LoginForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
   return (

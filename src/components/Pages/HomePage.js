@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NavBar from "../UI/NavBar";
 
 class HomePage extends Component {
   componentDidMount() {
@@ -6,7 +7,7 @@ class HomePage extends Component {
   }
 
   render() {
-    return <div>This is the Homepage </div>;
+    return <div>This is the Homepage</div>;
   }
 }
 

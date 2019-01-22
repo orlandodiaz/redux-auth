@@ -43,6 +43,7 @@ export function logout() {
           type: "LOGOUT",
           payload: response
         });
+        dispatch(flashMessage("Logged out successfully", "success"));
       })
       .catch(error => {
         console.log(error);
@@ -95,12 +96,27 @@ export function register(username, email, password) {
   };
 }
 
-export function flashMessage(message) {
+export function flashMessage(message, level) {
   return (dispatch, getState) => {
     dispatch({
       type: "FLASH_MESSAGE",
-      payload: message
+      payload: { message: message, type: level }
     });
+    setTimeout(() => {
+      dispatch({ type: "HIDE_MESSAGE" });
+    }, 6000);
+    // dispatch({
+    //   type: "FLASH_MESSAGE",
+    //   payload: message
+    // });
+    // setTimeout(
+    //   () =>
+    //     dispatch({
+    //       type: "HIDE_MESSAGE",
+    //       payload: message
+    //     }),
+    //   5000
+    // );
   };
 }
 
@@ -131,7 +147,7 @@ export function updateUser(user_data) {
     const token = state.auth.token;
     const headers = { Authorization: `Token ${token}` };
 
-    axios
+    return axios
       .put("http://127.0.0.1:8000/api/edit/", user_data, { headers: headers })
       .then(response => {
         console.log(response);
@@ -139,9 +155,10 @@ export function updateUser(user_data) {
           type: "UPDATE_USER",
           payload: response
         });
+        return Promise.resolve(response);
       })
       .catch(error => {
-        console.log(error);
+        return Promise.reject(error);
       });
   };
 }
