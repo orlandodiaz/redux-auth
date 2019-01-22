@@ -93,8 +93,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (username, password) => dispatch(actions.login(username, password)),
-    flash: message => dispatch(actions.flashMessage(message))
+    login: (username, password) => dispatch(actions.login(username, password))
+    // flash: message => dispatch(actions.flashMessage(message))
   };
 };
 

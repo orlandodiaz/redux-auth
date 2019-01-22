@@ -39,6 +39,9 @@ let ProfileForm = props => {
       <label> Last name </label>
       <Field name="last_name" component="input" type="text" />
 
+      <label> Email </label>
+      <Field value="email" name="email" component="input" type="text" />
+
       <button type="submit">Submit</button>
     </form>
   );

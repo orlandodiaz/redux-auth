@@ -89,7 +89,7 @@ class App extends Component {
           <Route exact path={"/"} component={HomePage} />
           <Route path={"/home"} component={HomePage} />
           <Route path={"/login"} component={LoginPage} />
-          <PrivateRoute path={"/about"} component={AboutPage} />
+          <Route path={"/about"} component={AboutPage} />
           <Route path={"/register"} component={RegisterPage} />
           <PrivateRoute path={"/profile"} component={ProfilePage} />
         </BasePage>

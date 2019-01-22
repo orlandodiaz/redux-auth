@@ -82,8 +82,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     register: (username, email, password) =>
-      dispatch(actions.register(username, email, password)),
-    flashMessage: message => dispatch(actions.flashMessage(message))
+      dispatch(actions.register(username, email, password))
   };
 };
 

@@ -6,6 +6,7 @@ import * as actionCreators from "../../actions";
 
 class NavBar extends Component {
   handleClick = () => {
+    // this.props.logout();
     this.props.logout().then(() => {
       this.props.history.push("/login");
     });

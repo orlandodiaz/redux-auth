@@ -30,9 +30,7 @@ function clearStorage() {
 
 const persistedState = loadFromLocalStorage();
 
-const initialState = {
-  message: ""
-};
+const initialState = {};
 
 const middleware = [thunk];
 

@@ -7,8 +7,6 @@ const flashReducer = (state = initState, action) => {
   switch (action.type) {
     case "FLASH_MESSAGE":
       return { message: action.payload };
-    default:
-      return initState;
 
     case "LOGIN_SUCCESS":
       return { message: "Logged in succesfully", type: "success" };
@@ -23,6 +21,9 @@ const flashReducer = (state = initState, action) => {
 
     case "REGISTRATION_FAILED":
       return { message: "Registration was unsuccesful", type: "error" };
+
+    default:
+      return state;
   }
 };
 

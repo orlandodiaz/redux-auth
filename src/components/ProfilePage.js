@@ -8,7 +8,8 @@ class ProfilePage extends Component {
   state = {
     username: "",
     first_name: "",
-    last_name: ""
+    last_name: "",
+    email: ""
   };
 
   componentDidMount() {
@@ -84,7 +85,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    flash: message => dispatch(actions.flashMessage(message)),
+    // flash: message => dispatch(actions.flashMessage(message)),
     currentUserDetail: () => dispatch(actions.currentUserDetail()),
     updateUser: user_data => dispatch(actions.updateUser(user_data))
   };
