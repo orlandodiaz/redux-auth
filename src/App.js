@@ -17,6 +17,8 @@ import HomePage from "./components/Pages/HomePage";
 import AboutPage from "./components/Pages/AboutPage";
 import RegisterPage from "./components/Pages/RegisterPage";
 import ProfilePage from "./components/Pages/ProfilePage";
+import PaswordResetRequestPage from "./components/Pages/PasswordResetRequestPage";
+import PaswordResetPage from "./components/Pages/PasswordResetPage";
 
 import * as actions from "./actions";
 
@@ -82,12 +84,14 @@ class App extends Component {
       <Router>
         {/*<Switch>*/}
         <BasePage>
-          <Route exact path={"/"} component={HomePage} />
-          <Route path={"/home"} component={HomePage} />
+          <PrivateRoute exact path={"/"} component={HomePage} />
+          <PrivateRoute path={"/home"} component={HomePage} />
           <Route path={"/login"} component={LoginPage} />
           <Route path={"/about"} component={AboutPage} />
           <Route path={"/register"} component={RegisterPage} />
           <PrivateRoute path={"/profile"} component={ProfilePage} />
+          <Route path={"/password_reset_request"} component={PaswordResetRequestPage} />
+          <Route path={"/password_reset/:token"} component={PaswordResetPage} />
         </BasePage>
         {/*</Switch>*/}
       </Router>

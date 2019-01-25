@@ -1,14 +1,23 @@
 const initState = {
   message: "",
-  type: ""
+  type: "",
+  is_flashing: false,
+  open: false
 };
 
 const flashReducer = (state = initState, action) => {
   switch (action.type) {
     case "FLASH_MESSAGE":
-      return { message: action.payload.message, type: action.payload.type };
-
+      return {
+        message: action.payload.message,
+        type: action.payload.type,
+        is_flashing: true,
+        open: true
+      };
     case "HIDE_MESSAGE":
+      return initState;
+
+    case "CLOSE_MESSAGE":
       return initState;
 
     // case "LOGIN_SUCCESS":

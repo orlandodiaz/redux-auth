@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import MenuIcon from "@material-ui/icons/Menu";
 // import IconButton from "@material-uai/core/IconButton/IconButton";
+import Person from "@material-ui/icons/Person";
 
 // import Menu from "@material-ui/icons/Menu";
 
@@ -15,9 +16,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import Drawer from "@material-ui/core/Drawer";
-import { browserHistory } from "react-router";
 import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button/Button";
+import * as actions from "../../actions";
+import connect from "react-redux/es/connect/connect";
+import compose from "recompose/compose";
+
 const styles = {
   root: {
     flexGrow: 1
@@ -56,7 +60,7 @@ class NavBar extends Component {
 
   render() {
     const { classes } = this.props;
-    const { handleLogin, handleLogout } = this.props;
+    const { handleLogin, handleLogout, handleProfile, handleRegister } = this.props;
 
     this.sideList = (
       <div className={classes.list}>
@@ -98,16 +102,45 @@ class NavBar extends Component {
             REST Auth Demo
           </Typography>
           <Typography variant="h6" color="inherit" className={classes.grow} />
-          {/*<Button color="inherit">aaLogin</Button>*/}
-          {/*/!*<Typography variant="h6" color="inherit">*!/*/}
-          {/*/!*About*!/*/}
-          {/*/!*</Typography>*!/*/}
-          <Button onClick={handleLogin} color="inherit">
-            Login
-          </Button>
-          <Button onClick={handleLogout} color="inherit">
-            Logout
-          </Button>
+
+          {/*{this.props.state.auth.is_authenticated ? (*/}
+          {/*<p style={{ marginRight: 15 }}>Welcome {this.props.state.user.username} !</p>*/}
+          {/*) : (*/}
+          {/*""*/}
+          {/*)}*/}
+
+          {this.props.state.auth.is_authenticated ? (
+            <Button onClick={handleProfile} color="inherit">
+              <Person style={{ paddingRight: 5 }} />
+              {this.props.state.user.username}
+            </Button>
+          ) : (
+            ""
+          )}
+
+          {this.props.state.auth.is_authenticated ? (
+            ""
+          ) : (
+            <Button onClick={handleLogin} color="inherit">
+              Login
+            </Button>
+          )}
+
+          {this.props.state.auth.is_authenticated ? (
+            <Button onClick={handleLogout} color="inherit">
+              Logout
+            </Button>
+          ) : (
+            ""
+          )}
+
+          {this.props.state.auth.is_authenticated ? (
+            ""
+          ) : (
+            <Button onClick={handleRegister} color="inherit">
+              Register
+            </Button>
+          )}
         </Toolbar>
 
         <Drawer open={this.state.left} onClose={this.toggleDrawer("left", false)}>
@@ -124,10 +157,16 @@ class NavBar extends Component {
     );
   }
 }
-// export default NavBar;
-//
+
 NavBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withRouter(withStyles(styles)(NavBar));
+const mapStateToProps = state => ({
+  state: state
+});
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps)
+)(withRouter(NavBar));

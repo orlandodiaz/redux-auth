@@ -1,9 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import ProfileForm from "../Forms/ProfileForm";
 import { flashMessage } from "../../actions";
+import Page from "../UI/Page";
+import CustomizedSnackbars from "../UI/CustomizedSnackbars";
+import Notification from "../UI/Notification";
+
+const element = (
+  <div>
+    Your email is not verified. Please click
+    <Link to="/"> here to </Link> request a verification email.
+  </div>
+);
 
 class ProfilePage extends Component {
   state = {
@@ -24,13 +34,13 @@ class ProfilePage extends Component {
     //     last_name: this.props.state.user.last_name
     //   })
     // );
-    this.props.currentUserDetail().then(() => {
-      this.setState({
-        username: this.props.state.user.username,
-        first_name: this.props.state.user.first_name,
-        last_name: this.props.state.user.last_name
-      });
-    });
+    // this.props.currentUserDetail().then(() => {
+    //   this.setState({
+    //     username: this.props.state.user.username,
+    //     first_name: this.props.state.user.first_name,
+    //     last_name: this.props.state.user.last_name
+    //   });
+    // });
 
     // UpdateUser action
   }
@@ -53,8 +63,16 @@ class ProfilePage extends Component {
 
   render() {
     return (
-      <div>
-        This is the Profile page. It displays information about the user
+      <Page title="Profile">
+        Change your account settings here
+        <p>
+          <Notification
+            type="warning"
+            message={element}
+            // message="Your email is not verified. Please click here to request a verification email"
+            style={{ padding: 0, margin: 0, borderRadius: "0" }}
+          />
+        </p>
         <ProfileForm onSubmit={this.handleSubmit} />
         {/*<form onSubmit={this.handleSubmit}>*/}
         {/*<label> Username </label>*/}
@@ -82,7 +100,7 @@ class ProfilePage extends Component {
         {/*Submit*/}
         {/*</button>*/}
         {/*</form>*/}
-      </div>
+      </Page>
     );
   }
 }

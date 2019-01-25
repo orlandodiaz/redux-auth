@@ -14,6 +14,7 @@ export function login(username, password) {
           payload: response,
           user: username
         });
+        return Promise.resolve(response);
       })
       .catch(error => {
         console.log(error);
@@ -21,6 +22,7 @@ export function login(username, password) {
           type: "LOGIN_FAILURE",
           payload: error.response
         });
+        return Promise.reject(error);
       });
   };
 }
@@ -74,7 +76,7 @@ export function logout() {
 
 export function register(username, email, password) {
   return (dispatch, getState) => {
-    axios
+    return axios
       .post("http://127.0.0.1:8000/api/create/", {
         username: username,
         email: email,
@@ -86,37 +88,44 @@ export function register(username, email, password) {
           type: "REGISTER",
           payload: response
         });
+        return Promise.resolve(response);
       })
       .catch(error => {
         dispatch({
           type: "REGISTRATION_FAILED",
           payload: error.response.data
         });
+        return Promise.reject(error.response);
       });
   };
 }
-
+let flash_timeout = null;
 export function flashMessage(message, level) {
   return (dispatch, getState) => {
+    clearTimeout(flash_timeout);
+
+    const hide_action = {
+      type: "HIDE_MESSAGE",
+      payload: { message: message, type: level }
+    };
+
     dispatch({
       type: "FLASH_MESSAGE",
       payload: { message: message, type: level }
     });
-    setTimeout(() => {
-      dispatch({ type: "HIDE_MESSAGE" });
-    }, 6000);
-    // dispatch({
-    //   type: "FLASH_MESSAGE",
-    //   payload: message
-    // });
-    // setTimeout(
-    //   () =>
-    //     dispatch({
-    //       type: "HIDE_MESSAGE",
-    //       payload: message
-    //     }),
-    //   5000
-    // );
+
+    flash_timeout = setTimeout(function() {
+      dispatch(hide_action);
+    }, 5000);
+  };
+}
+
+export function closeMessage() {
+  return (dispatch, getState) => {
+    dispatch({
+      type: "CLOSE_MESSAGE",
+      payload: null
+    });
   };
 }
 
@@ -163,25 +172,56 @@ export function updateUser(user_data) {
   };
 }
 
-// export function logout() {
-//   return (dispatch, getState) => {
-//
-//
-//     console.log(`token: ${token}`);
-//     console.log(`headers: ${headers}`);
-//     console.log(headers);
-//     axios
-//       .post("http://127.0.0.1:8000/api/logout/", null, { headers: headers })
-//       .then(response => {
-//         console.log(response);
-//
-//         dispatch({
-//           type: "LOGOUT",
-//           payload: response
-//         });
-//       })
-//       .catch(error => {
-//         console.log(error);
-//       });
-//   };
-// }
+export function verifyResetPasswordToken(token) {
+  return (dispatch, getState) => {
+    return axios
+      .post("http://127.0.0.1:8000/api/verify_password_reset_token/", { token: token })
+      .then(response => {
+        console.log(response);
+        dispatch({
+          type: "VERIFY_RESET_PASSWORD_TOKEN",
+          payload: response
+        });
+        return Promise.resolve(response);
+      })
+      .catch(error => {
+        return Promise.reject(error.response);
+      });
+  };
+}
+
+export function sendPasswordResetEmail(email) {
+  return (dispatch, getState) => {
+    return axios
+      .post("http://127.0.0.1:8000/api/password_reset_request/", { email: email })
+      .then(response => {
+        console.log(response);
+        dispatch({
+          type: "SEND_PASSWORD_RESET_EMAIL",
+          payload: response
+        });
+        return Promise.resolve(response);
+      })
+      .catch(error => {
+        return Promise.reject(error.response);
+      });
+  };
+}
+
+export function resetPassword(token, data) {
+  return (dispatch, getState) => {
+    return axios
+      .put(`http://127.0.0.1:8000/api/password_reset/${token}`, data)
+      .then(response => {
+        console.log(response);
+        dispatch({
+          type: "RESET_PASSWORD",
+          payload: response
+        });
+        return Promise.resolve(response);
+      })
+      .catch(error => {
+        return Promise.reject(error.response);
+      });
+  };
+}

@@ -3,35 +3,46 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
+// import Icon from "@material-ui/core/Icon";
+import SvgIcon from "@material-ui/core/SvgIcon";
 
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
+
     paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
+    paddingBottom: theme.spacing.unit * 2,
+    height: "100%",
+    minWidth: "400px",
+    maxWidth: "800px",
+    width: "auto",
+    marginTop: 50,
+    // marginTop:0;
+    marginBottom: 0,
+    marginLeft: "auto",
+    marginRight: "auto"
   }
 });
 
-function PaperSheet(props) {
-  const { classes } = props;
+function Page(props) {
+  const { classes, title, children, icon, ...other } = props;
 
   return (
-    <div>
-      <Paper className={classes.root} elevation={1}>
-        <Typography variant="h5" component="h3">
-          This is a sheet of paper.
-        </Typography>
-        <Typography component="p">
-          Paper can be used to build surface or other elements for your
-          application.
-        </Typography>
-      </Paper>
-    </div>
+    <Paper className={classes.root} elevation={1} {...other}>
+      <Typography variant="h4" component="h3">
+        {icon}
+        {title}
+      </Typography>
+      <p />
+
+      <Typography component="p">{children}</Typography>
+    </Paper>
   );
 }
 
-PaperSheet.propTypes = {
+Page.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PaperSheet);
+export default withStyles(styles)(Page);
