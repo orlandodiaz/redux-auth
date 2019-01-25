@@ -4,84 +4,60 @@ import { connect } from "react-redux";
 import * as actions from "../../actions";
 import { Redirect } from "react-router-dom";
 import LoginForm from "../Forms/LoginForm";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { flashMessage } from "../../actions";
+import Page from "../UI/Page";
+// import LockOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import LockIcon from "../UI/Lockicon";
 
-// Fake sample data goes here
+/**
+ * This is the Login Page component
+ *
+ */
+
+const style = {
+  height: "20%",
+  minWidth: "400px",
+  maxWidth: "800px",
+  width: "300px",
+  marginTop: 50,
+  // marginTop:0;
+  marginBottom: 0,
+  marginLeft: "auto",
+  marginRight: "auto",
+  color: "white"
+};
 
 class LoginComponent extends Component {
-  state = {
-    username: "",
-    password: "",
-    redirectToReferrer: false
-  };
-
-  componentDidMount() {
+  componentWillMount() {
     document.title = "Login";
   }
-  // const isLoggedIn = this.props.currentstate.auth.is_authenticated;
-
-  // handleSubmit = e => {
-  //   // alert(this.state.username);
-  //   // this.props.users
-  //
-  //   // alert("It works");
-  //   e.preventDefault();
-  //
-  //   // console.log(values.username);
-  //   this.props.login(this.state.username, this.state.password);
-  // };
 
   handleSubmit = values => {
-    // alert(this.state.username);
-    // this.props.users
+    this.props
+      .login(values.username, values.password)
+      .then(() => {
+        this.props.flash("Logged in succesfully", "success");
 
-    // alert("It works");
-    // e.preventDefault();
-
-    // console.log(values.username);
-    this.props.login(values.username, values.password).then(() => {
-      this.props.flash("Logged in succesfully", "success");
-    });
+        // this.props.dispatch(flashMessage("Logged in succesfully", "success"));
+      })
+      .then(() => {
+        this.props.currentUserDetail();
+      })
+      .catch(() => {
+        this.props.flash("Incorrect username or password ", "error");
+      });
   };
 
   render() {
     const isLoggedIn = this.props.state.auth.is_authenticated;
 
-    // const { from } = this.props.location.state || { from: { pathname: "/" } };
     if (isLoggedIn) {
-      // return <Redirect to="/profile" />;
-      // return this.props.history.push("/profile");
-
       const { from } = this.props.location.state || { from: { pathname: "/" } };
 
       return <Redirect to={from} />;
     } else {
-      return (
-        <div>
-          <h1> Login </h1>
-          <LoginForm onSubmit={this.handleSubmit} />
-          {/*<form onSubmit={this.handleSubmit}>*/}
-          {/*<label> Login </label>*/}
-          {/*<input*/}
-          {/*type="text"*/}
-          {/*id="username"*/}
-          {/*onChange={e => this.setState({ username: e.target.value })}*/}
-          {/*/>*/}
-
-          {/*<label> Password </label>*/}
-          {/*<input*/}
-          {/*type="text"*/}
-          {/*id="password"*/}
-          {/*onChange={e => this.setState({ password: e.target.value })}*/}
-          {/*/>*/}
-
-          {/*<button onSubmit={this.handleSubmit} type="submit">*/}
-          {/*Login*/}
-          {/*</button>*/}
-          {/*</form>*/}
-        </div>
-      );
+      return <LoginForm onSubmit={this.handleSubmit} />;
     }
   }
 }
@@ -93,7 +69,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     login: (username, password) => dispatch(actions.login(username, password)),
-    flash: (message, type) => dispatch(actions.flashMessage(message, type))
+    flash: (message, type) => dispatch(actions.flashMessage(message, type)),
+    currentUserDetail: () => dispatch(actions.currentUserDetail())
   };
 };
 
