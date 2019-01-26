@@ -45,10 +45,11 @@ export function logout() {
           type: "LOGOUT",
           payload: response
         });
-        dispatch(flashMessage("Logged out successfully", "success"));
+        return Promise.resolve(response);
       })
       .catch(error => {
         console.log(error);
+        return Promise.reject(error.response);
       });
   };
 }
@@ -216,6 +217,53 @@ export function resetPassword(token, data) {
         console.log(response);
         dispatch({
           type: "RESET_PASSWORD",
+          payload: response
+        });
+        return Promise.resolve(response);
+      })
+      .catch(error => {
+        return Promise.reject(error.response);
+      });
+  };
+}
+
+export function requestEmailVerificationEmail(email) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const token = state.auth.token;
+    const headers = { Authorization: `Token ${token}` };
+
+    return axios
+      .post("http://127.0.0.1:8000/api/request_email_verification_email/", null, {
+        headers: headers
+      })
+      .then(response => {
+        console.log(response);
+        dispatch({
+          type: "REQUEST_EMAIL_VERIFICATION_EMAIL",
+          payload: response
+        });
+        return Promise.resolve(response);
+      })
+      .catch(error => {
+        return Promise.reject(error.response);
+      });
+  };
+}
+
+export function verifyEmailToken(email_token) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const auth_token = state.auth.token;
+
+    const headers = { Authorization: `Token ${auth_token}` };
+
+    return axios
+      .post("http://127.0.0.1:8000/api/verify_email/", { token: email_token }, { headers: headers })
+      .then(response => {
+        console.log(response);
+        dispatch({
+          type: "VERIFY_EMAIL_TOKEN",
           payload: response
         });
         return Promise.resolve(response);
