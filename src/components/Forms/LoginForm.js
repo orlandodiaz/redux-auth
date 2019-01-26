@@ -98,6 +98,7 @@ let LoginForm = props => {
         </p>
         <p>
           {" "}
+          {/*<a href="/password_reset_request"> Forgot password? </a>*/}
           <Link to="/password_reset_request">Forgot username/password?</Link>
         </p>
         {/*<Typography variant="body1">Don't have an account? Register here</Typography>*/}

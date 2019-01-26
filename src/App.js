@@ -19,6 +19,7 @@ import RegisterPage from "./components/Pages/RegisterPage";
 import ProfilePage from "./components/Pages/ProfilePage";
 import PaswordResetRequestPage from "./components/Pages/PasswordResetRequestPage";
 import PaswordResetPage from "./components/Pages/PasswordResetPage";
+import EmailVerificationPage from "./components/Pages/EmailVerificationPage";
 
 import * as actions from "./actions";
 
@@ -92,6 +93,7 @@ class App extends Component {
           <PrivateRoute path={"/profile"} component={ProfilePage} />
           <Route path={"/password_reset_request"} component={PaswordResetRequestPage} />
           <Route path={"/password_reset/:token"} component={PaswordResetPage} />
+          <Route path={"/verify_email/:token"} component={EmailVerificationPage} />
         </BasePage>
         {/*</Switch>*/}
       </Router>

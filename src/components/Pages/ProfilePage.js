@@ -8,10 +8,13 @@ import Page from "../UI/Page";
 import CustomizedSnackbars from "../UI/CustomizedSnackbars";
 import Notification from "../UI/Notification";
 
-const element = (
+const NotVerifiedNotification = ({ onClick }) => (
   <div>
-    Your email is not verified. Please click
-    <Link to="/"> here to </Link> request a verification email.
+    Your email is not verified. Please click{" "}
+    <a href="#" onClick={onClick}>
+      here
+    </a>{" "}
+    to request a verification email.
   </div>
 );
 
@@ -25,24 +28,6 @@ class ProfilePage extends Component {
 
   componentDidMount() {
     document.title = "Profile";
-    // alert("componentmounted");
-
-    // this.props.currentUserDetail().then(
-    //   this.setState({
-    //     username: this.props.state.user.username,
-    //     first_name: this.props.state.user.first_name,
-    //     last_name: this.props.state.user.last_name
-    //   })
-    // );
-    // this.props.currentUserDetail().then(() => {
-    //   this.setState({
-    //     username: this.props.state.user.username,
-    //     first_name: this.props.state.user.first_name,
-    //     last_name: this.props.state.user.last_name
-    //   });
-    // });
-
-    // UpdateUser action
   }
   handleSubmit = values => {
     this.props
@@ -55,51 +40,34 @@ class ProfilePage extends Component {
       });
   };
 
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   // alert(values.username);
-  //   this.props.updateUser(this.state);
-  // };
+  handleClick = () => {
+    this.props
+      .requestEmailVerificationEmail()
+      .then(response => {
+        this.props.flash("Email request has been sent", "success");
+      })
+      .catch(error => {
+        this.props.flash("Error sending request for email verification", "error");
+      });
+  };
+  email_confirmed;
 
   render() {
     return (
       <Page title="Profile">
         Change your account settings here
         <p>
-          <Notification
-            type="warning"
-            message={element}
-            // message="Your email is not verified. Please click here to request a verification email"
-            style={{ padding: 0, margin: 0, borderRadius: "0" }}
-          />
+          {this.props.state.user.email_confirmed ? (
+            ""
+          ) : (
+            <Notification
+              type="warning"
+              message={<NotVerifiedNotification onClick={this.handleClick} />}
+              style={{ padding: 0, margin: 0, borderRadius: "0" }}
+            />
+          )}
         </p>
         <ProfileForm onSubmit={this.handleSubmit} />
-        {/*<form onSubmit={this.handleSubmit}>*/}
-        {/*<label> Username </label>*/}
-        {/*<input*/}
-        {/*type="text"*/}
-        {/*id="username"*/}
-        {/*defaultValue={this.props.state.user.username}*/}
-        {/*onChange={e => this.setState({ username: e.target.value })}*/}
-        {/*/>*/}
-        {/*<label> First name </label>*/}
-        {/*<input*/}
-        {/*type="text"*/}
-        {/*id="first_name"*/}
-        {/*defaultValue={this.props.state.user.first_name}*/}
-        {/*onChange={e => this.setState({ first_name: e.target.value })}*/}
-        {/*/>*/}
-        {/*<label> Last name </label>*/}
-        {/*<input*/}
-        {/*type="text"*/}
-        {/*id="password"*/}
-        {/*defaultValue={this.props.state.user.last_name}*/}
-        {/*onChange={e => this.setState({ last_name: e.target.value })}*/}
-        {/*/>*/}
-        {/*<button onSubmit={this.handleSubmit} type="submit">*/}
-        {/*Submit*/}
-        {/*</button>*/}
-        {/*</form>*/}
       </Page>
     );
   }
@@ -113,14 +81,14 @@ const mapDispatchToProps = dispatch => {
   return {
     flash: (message, type) => dispatch(actions.flashMessage(message, type)),
     currentUserDetail: () => dispatch(actions.currentUserDetail()),
-    updateUser: user_data => dispatch(actions.updateUser(user_data))
+    updateUser: user_data => dispatch(actions.updateUser(user_data)),
+    requestEmailVerificationEmail: () => dispatch(actions.requestEmailVerificationEmail())
   };
 };
 
 export default withRouter(
   connect(
     mapStateToProps,
-    // actionCreators
     mapDispatchToProps
   )(ProfilePage)
 );
