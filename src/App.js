@@ -21,6 +21,9 @@ import PaswordResetRequestPage from "./components/Pages/PasswordResetRequestPage
 import PaswordResetPage from "./components/Pages/PasswordResetPage";
 import EmailVerificationPage from "./components/Pages/EmailVerificationPage";
 
+// import PrivateRoute from "./PrivateRoute";
+// import Routes from "./Routes";
+
 import * as actions from "./actions";
 
 // class HomePage extends Component {
@@ -68,6 +71,10 @@ class App extends Component {
       <Route
         {...rest}
         render={props => {
+          console.log("props inside private route");
+          console.log(props);
+
+          // console.log(this.props);
           if (!this.props.state.auth.is_authenticated) {
             return <Redirect to={{ pathname: "/login", state: { from: props.location } }} />;
           } else {
@@ -83,19 +90,19 @@ class App extends Component {
 
     return (
       <Router>
-        {/*<Switch>*/}
         <BasePage>
-          <PrivateRoute exact path={"/"} component={HomePage} />
-          <PrivateRoute path={"/home"} component={HomePage} />
-          <Route path={"/login"} component={LoginPage} />
-          <Route path={"/about"} component={AboutPage} />
-          <Route path={"/register"} component={RegisterPage} />
-          <PrivateRoute path={"/profile"} component={ProfilePage} />
-          <Route path={"/password_reset_request"} component={PaswordResetRequestPage} />
-          <Route path={"/password_reset/:token"} component={PaswordResetPage} />
-          <Route path={"/verify_email/:token"} component={EmailVerificationPage} />
+          <Switch>
+            <PrivateRoute exact path={"/"} component={HomePage} />
+            <PrivateRoute path={"/home"} component={HomePage} />
+            <Route path={"/login"} component={LoginPage} />
+            <Route path={"/about"} component={AboutPage} />
+            <Route path={"/register"} component={RegisterPage} />
+            <PrivateRoute path={"/profile"} component={ProfilePage} />
+            <Route path={"/password_reset_request"} component={PaswordResetRequestPage} />
+            <Route path={"/password_reset/:token"} component={PaswordResetPage} />
+            <Route path={"/verify_email/:token"} component={EmailVerificationPage} />
+          </Switch>
         </BasePage>
-        {/*</Switch>*/}
       </Router>
     );
   }

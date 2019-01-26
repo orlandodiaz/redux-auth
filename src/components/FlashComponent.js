@@ -20,16 +20,6 @@ class FlashComponent extends Component {
     }
     return "";
   }
-
-  //     // <p style={{ color: "red" }}>{this.props.state.flash.message}</p>;
-  //   }
-  //
-  //   if (this.props.state.flash.message && this.props.state.flash.type === "success") {
-  //     return <p style={{ color: "green" }}>{this.props.state.flash.message}</p>;
-  //   }
-  //
-  //   return "";
-  // }
 }
 
 const mapStateToProps = state => ({
