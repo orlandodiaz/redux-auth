@@ -22,13 +22,6 @@ const validate = values => {
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Invalid email address";
   }
-  // if (!values.age) {
-  //   errors.age = "Required";
-  // } else if (isNaN(Number(values.age))) {
-  //   errors.age = "Must be a number";
-  // } else if (Number(values.age) < 18) {
-  //   errors.age = "Sorry, you must be at least 18 years old";
-  // }
   return errors;
 };
 
@@ -82,20 +75,8 @@ let ProfileForm = props => {
       <MyButton type="submit" variant="contained" color="primary" fullWidth="true">
         Update profile
       </MyButton>
-      {/*<Typography variant="body1">Don't have an account? Register here</Typography>*/}
     </form>
   );
-  // return (
-  //   <form onSubmit={handleSubmit}>
-  //     <label> Login </label>
-  //     <Field name="username" component={renderField} type="text" />
-  //
-  //     <label> password </label>
-  //     <Field name="password" component={renderField} type="text" />
-  //
-  //     <button type="submit">Submit</button>
-  //   </form>
-  // );
 };
 
 ProfileForm = reduxForm({

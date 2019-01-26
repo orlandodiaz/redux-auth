@@ -1,11 +1,8 @@
 import { Field, reduxForm } from "redux-form";
 import React, { Component } from "react";
 import { TextField } from "redux-form-material-ui";
-import SimpleField from "../UI/SimpleField";
-import Typography from "@material-ui/core/Typography";
-
 import MyButton from "../UI/Button";
-import Button from "@material-ui/core/Button";
+
 /////////////////////////////////////////// VALIDATIONS///////////////////////////////////
 const validate = values => {
   const errors = {};
@@ -19,14 +16,6 @@ const validate = values => {
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = "Invalid email address";
   }
-
-  // if (!values.age) {
-  //   errors.age = "Required";
-  // } else if (isNaN(Number(values.age))) {
-  //   errors.age = "Must be a number";
-  // } else if (Number(values.age) < 18) {
-  //   errors.age = "Sorry, you must be at least 18 years old";
-  // }
   return errors;
 };
 
@@ -58,7 +47,6 @@ let RegisterForm = props => {
       <p>
         <Field name="username" label="username" component={TextField} fullWidth="true" />
       </p>
-      {/*<SimpleField name="username" label="Username" component={TextField} fullWidth="true" />*/}
       <p>
         <Field
           name="password"
@@ -86,20 +74,8 @@ let RegisterForm = props => {
       <MyButton type="submit" variant="contained" color="primary" fullWidth="true">
         Register
       </MyButton>
-      {/*<Typography variant="body1">Don't have an account? Register here</Typography>*/}
     </form>
   );
-  // return (
-  //   <form onSubmit={handleSubmit}>
-  //     <label> Login </label>
-  //     <Field name="username" component={renderField} type="text" />
-  //
-  //     <label> password </label>
-  //     <Field name="password" component={renderField} type="text" />
-  //
-  //     <button type="submit">Submit</button>
-  //   </form>
-  // );
 };
 
 RegisterForm = reduxForm({

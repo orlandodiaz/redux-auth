@@ -1,14 +1,9 @@
 import { Field, reduxForm } from "redux-form";
 import React, { Component } from "react";
 import { TextField } from "redux-form-material-ui";
-import SimpleField from "../UI/SimpleField";
-import Typography from "@material-ui/core/Typography";
 
 import MyButton from "../UI/Button";
-import Button from "@material-ui/core/Button";
-import connect from "react-redux/es/connect/connect";
-import * as actions from "../../actions";
-import { withRouter } from "react-router-dom";
+
 /////////////////////////////////////////// VALIDATIONS///////////////////////////////////
 const validate = values => {
   const errors = {};
@@ -86,7 +81,6 @@ let PasswordResetForm = props => {
       <MyButton type="submit" variant="contained" color="primary" fullWidth="true">
         Submit
       </MyButton>
-      {/*<Typography variant="body1">Don't have an account? Register here</Typography>*/}
     </form>
   );
 };

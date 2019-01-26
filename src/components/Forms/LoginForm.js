@@ -25,7 +25,7 @@ const style = {
   color: "white"
 };
 
-/////////////////////////////////////////// VALIDATIONS///////////////////////////////////
+/////////////////////////////////////////// VALIDATIONS ///////////////////////////////////
 const validate = values => {
   const errors = {};
   if (!values.username) {
@@ -33,18 +33,7 @@ const validate = values => {
   } else if (values.username.length > 15) {
     errors.username = "Must be 15 characters or less";
   }
-  // if (!values.email) {
-  //   errors.email = "Required";
-  // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-  //   errors.email = "Invalid email address";
-  // }
-  // if (!values.age) {
-  //   errors.age = "Required";
-  // } else if (isNaN(Number(values.age))) {
-  //   errors.age = "Must be a number";
-  // } else if (Number(values.age) < 18) {
-  //   errors.age = "Sorry, you must be at least 18 years old";
-  // }
+
   return errors;
 };
 
@@ -69,7 +58,7 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
 
 ////////////////////////// FORM HTML ////////////////////////////////
 let LoginForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+  const { handleSubmit } = props;
 
   return (
     <Page icon={LockIcon} title="Sign in" style={style}>
@@ -77,7 +66,6 @@ let LoginForm = props => {
         <p>
           <Field name="username" label="username" component={TextField} fullWidth="true" />
         </p>
-        {/*<SimpleField name="username" label="Username" component={TextField} fullWidth="true" />*/}
         <p>
           <Field
             name="password"
@@ -87,8 +75,6 @@ let LoginForm = props => {
             fullWidth="true"
           />
         </p>
-        {/*<button type="submit">Submit</button>*/}
-        {/*<MyButton fullWidth="true" />*/}
         <MyButton type="submit" variant="contained" color="primary" fullWidth="true">
           Sign in
         </MyButton>
@@ -98,24 +84,11 @@ let LoginForm = props => {
         </p>
         <p>
           {" "}
-          {/*<a href="/password_reset_request"> Forgot password? </a>*/}
           <Link to="/password_reset_request">Forgot username/password?</Link>
         </p>
-        {/*<Typography variant="body1">Don't have an account? Register here</Typography>*/}
       </form>
     </Page>
   );
-  // return (
-  //   <form onSubmit={handleSubmit}>
-  //     <label> Login </label>
-  //     <Field name="username" component={renderField} type="text" />
-  //
-  //     <label> password </label>
-  //     <Field name="password" component={renderField} type="text" />
-  //
-  //     <button type="submit">Submit</button>
-  //   </form>
-  // );
 };
 
 LoginForm = reduxForm({
