@@ -9,6 +9,7 @@ import { flashMessage } from "../../../actions";
 import * as actions from "../../../actions";
 import Page from "../../UI/Page";
 import LoginForm from "../../Forms/LoginForm";
+import clearStorage from "../../../store";
 class BasePage extends Component {
   state = {
     current_location: ""
@@ -33,9 +34,20 @@ class BasePage extends Component {
               this.props.history.push("/login");
             }}
             handleLogout={() => {
-              this.props.logout().then(() => {
-                this.props.history.push("/login");
-              });
+              this.props
+                .logout()
+                .then(() => {
+                  this.props.flash("Logged out successfully", "success");
+                  this.props.history.push("/login");
+                })
+                .catch(err => {
+                  this.props.flash("Logout error", "error");
+
+                  // alert("ss");
+                  // If we get an error then the token was invalidated by another browser session
+                  localStorage.clear();
+                  window.location.reload();
+                });
             }}
             handleRegister={() => {
               this.props.history.push("/register");
@@ -43,10 +55,6 @@ class BasePage extends Component {
           />
           <FlashComponent />
           <div id="content">{this.props.children}</div>
-          {/*</Page>*/}
-          {/*<h1> React Authentication with Django Backend </h1>*/}
-          {/*The user {this.props.state.user.username} is <b>{isLoggedIn ? "currently" : "not"}</b>{" "}*/}
-          {/*logged in.*/}
         </div>
       </html>
     );
