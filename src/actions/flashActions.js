@@ -1,15 +1,17 @@
+import * as types from "./types";
+
 let flash_timeout = null;
 export function flashMessage(message, level) {
   return (dispatch, getState) => {
     clearTimeout(flash_timeout);
 
     const hide_action = {
-      type: "HIDE_MESSAGE",
+      type: types.HIDE_MESSAGE,
       payload: { message: message, type: level }
     };
 
     dispatch({
-      type: "FLASH_MESSAGE",
+      type: types.FLASH_MESSAGE,
       payload: { message: message, type: level }
     });
 
@@ -22,7 +24,7 @@ export function flashMessage(message, level) {
 export function closeMessage() {
   return (dispatch, getState) => {
     dispatch({
-      type: "CLOSE_MESSAGE",
+      type: types.CLOSE_MESSAGE,
       payload: null
     });
   };
