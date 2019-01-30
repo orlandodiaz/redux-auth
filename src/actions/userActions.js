@@ -7,7 +7,7 @@ export function currentUserDetail() {
     const headers = { Authorization: `Token ${token}` };
 
     return axios
-      .get("http://127.0.0.1:8000/api/", { headers: headers })
+      .get("/api/", { headers: headers })
       .then(response => {
         console.log(response);
         dispatch({
@@ -28,7 +28,7 @@ export function updateUser(user_data) {
     const headers = { Authorization: `Token ${token}` };
 
     return axios
-      .put("http://127.0.0.1:8000/api/edit/", user_data, { headers: headers })
+      .put("/api/edit/", user_data, { headers: headers })
       .then(response => {
         console.log(response);
         dispatch({
@@ -46,7 +46,7 @@ export function updateUser(user_data) {
 export function verifyResetPasswordToken(token) {
   return (dispatch, getState) => {
     return axios
-      .post("http://127.0.0.1:8000/api/verify_password_reset_token/", { token: token })
+      .post("/api/verify_password_reset_token/", { token: token })
       .then(response => {
         console.log(response);
         dispatch({
@@ -64,7 +64,7 @@ export function verifyResetPasswordToken(token) {
 export function sendPasswordResetEmail(email) {
   return (dispatch, getState) => {
     return axios
-      .post("http://127.0.0.1:8000/api/password_reset_request/", { email: email })
+      .post("/api/password_reset_request/", { email: email })
       .then(response => {
         console.log(response);
         dispatch({
@@ -104,7 +104,7 @@ export function requestEmailVerificationEmail(email) {
     const headers = { Authorization: `Token ${token}` };
 
     return axios
-      .post("http://127.0.0.1:8000/api/request_email_verification_email/", null, {
+      .post(/api/request_email_verification_email/", null, {
         headers: headers
       })
       .then(response => {
@@ -129,7 +129,7 @@ export function verifyEmailToken(email_token) {
     const headers = { Authorization: `Token ${auth_token}` };
 
     return axios
-      .post("http://127.0.0.1:8000/api/verify_email/", { token: email_token }, { headers: headers })
+      .post("/api/verify_email/", { token: email_token }, { headers: headers })
       .then(response => {
         console.log(response);
         dispatch({
