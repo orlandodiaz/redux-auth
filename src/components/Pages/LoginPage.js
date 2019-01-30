@@ -38,8 +38,6 @@ class LoginComponent extends Component {
       .login(values.username, values.password)
       .then(() => {
         this.props.flash("Logged in succesfully", "success");
-
-        // this.props.dispatch(flashMessage("Logged in succesfully", "success"));
       })
       .then(() => {
         this.props.currentUserDetail();

@@ -64,7 +64,7 @@ import * as actions from "./actions";
 //     }
 //   />
 // );
-
+//Robo Mono /15/1.4pts
 class App extends Component {
   PrivateRoute = ({ component: ChildComponent, ...rest }) => {
     return (
