@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../settings";
 
 export function currentUserDetail() {
   return (dispatch, getState) => {
@@ -7,7 +8,7 @@ export function currentUserDetail() {
     const headers = { Authorization: `Token ${token}` };
 
     return axios
-      .get("/api/", { headers: headers })
+      .get(`${API_URL}/api/`, { headers: headers })
       .then(response => {
         console.log(response);
         dispatch({
@@ -28,7 +29,7 @@ export function updateUser(user_data) {
     const headers = { Authorization: `Token ${token}` };
 
     return axios
-      .put("/api/edit/", user_data, { headers: headers })
+      .put(`${API_URL}/api/edit/`, user_data, { headers: headers })
       .then(response => {
         console.log(response);
         dispatch({
@@ -46,7 +47,7 @@ export function updateUser(user_data) {
 export function verifyResetPasswordToken(token) {
   return (dispatch, getState) => {
     return axios
-      .post("/api/verify_password_reset_token/", { token: token })
+      .post(`${API_URL}/api/verify_password_reset_token/`, { token: token })
       .then(response => {
         console.log(response);
         dispatch({
@@ -64,7 +65,7 @@ export function verifyResetPasswordToken(token) {
 export function sendPasswordResetEmail(email) {
   return (dispatch, getState) => {
     return axios
-      .post("/api/password_reset_request/", { email: email })
+      .post(`${API_URL}/api/password_reset_request/`, { email: email })
       .then(response => {
         console.log(response);
         dispatch({
@@ -82,7 +83,7 @@ export function sendPasswordResetEmail(email) {
 export function resetPassword(token, data) {
   return (dispatch, getState) => {
     return axios
-      .put(`http://127.0.0.1:8000/api/password_reset/${token}`, data)
+      .put(`${API_URL}/api/password_reset/${token}`, data)
       .then(response => {
         console.log(response);
         dispatch({
@@ -104,7 +105,7 @@ export function requestEmailVerificationEmail(email) {
     const headers = { Authorization: `Token ${token}` };
 
     return axios
-      .post("/api/request_email_verification_email/", null, {
+      .post(`${API_URL}/api/request_email_verification_email/`, null, {
         headers: headers
       })
       .then(response => {
@@ -129,7 +130,7 @@ export function verifyEmailToken(email_token) {
     const headers = { Authorization: `Token ${auth_token}` };
 
     return axios
-      .post("/api/verify_email/", { token: email_token }, { headers: headers })
+      .post(`${API_URL}/api/verify_email/`, { token: email_token }, { headers: headers })
       .then(response => {
         console.log(response);
         dispatch({
