@@ -104,7 +104,7 @@ export function requestEmailVerificationEmail(email) {
     const headers = { Authorization: `Token ${token}` };
 
     return axios
-      .post(/api/request_email_verification_email/", null, {
+      .post("/api/request_email_verification_email/", null, {
         headers: headers
       })
       .then(response => {
