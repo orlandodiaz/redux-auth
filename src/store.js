@@ -9,15 +9,15 @@ import { persistedState, saveToLocalStorage } from "./localStorage";
 const middleware = [thunk];
 
 // Redux dev tools
-const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+// const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
 // For  REDUX_DEVTOOLS use only for development with Google Chrome, otherwise you will get errors
 const store = createStore(
   allReducers,
   persistedState,
   compose(
-    applyMiddleware(...middleware),
-    reduxDevTools
+    applyMiddleware(...middleware)
+    // reduxDevTools
   )
 );
 
